@@ -1,0 +1,47 @@
+name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+      - trunk
+  tags:
+    include:
+      - 'secretsmanager-v*'     # Module-specific tags like secretsmanager-v1.0.0
+  paths:
+    include:
+      - modules/L1/secretsmanager/*
+
+resources:
+  - repo: self
+    clean: all
+    fetchDepth: 1
+
+variables:
+  - name: Artifactory.Repository
+    value: 'common-terraform-modules'
+  - name: Artifactory.Namespace
+    value: 'bancolombia'
+  - name: sourceFolder
+    value: 'modules/L1/secretsmanager'
+  - name: moduleLayer
+    value: $[split(replace(variables['sourceFolder'], 'modules/', ''), '/')[0]]
+  - name: moduleName
+    value: 'secretsmanager'
+  - name: moduleVersion
+    value: $[replace(variables['Build.SourceBranch'], 'refs/tags/', '')] # Extract version from tag
+  - name: providerName
+    value: 'aws'
+
+stages:
+  - stage: Build
+    displayName: Build and Publish
+    jobs:
+      - job: Linux
+        displayName: Build and publication of artifact
+        pool:
+          name: Release-cloud
+          demands:
+            - Agent.OS -equals Linux 
+                
+        steps:
+          - template: ../../templates/step-template.yaml
