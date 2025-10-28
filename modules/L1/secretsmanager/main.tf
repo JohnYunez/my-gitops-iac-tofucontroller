@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "this" {
-    name        = "${var.app_code}-${var.project_name}-${var.environment}-secret"
+    name        = "${var.app_code}-${var.project_name}-${var.environment}-${random_id.this.hex}-secret"
     description = var.secret_description
     kms_key_id  = var.secret_kms_key_arn
     recovery_window_in_days = 7
@@ -13,11 +13,15 @@ locals {
 
 resource "aws_secretsmanager_secret_version" "this" {
     secret_id      = aws_secretsmanager_secret.this.id
-    secret_string  = local.secure_string  
+    secret_string  = local.secure_string
+}
+
+resource "random_id" "this" {
+    byte_length = 5
 }
 
 resource "random_password" "this" {
-    length = var.random_password_length
+    length  = var.random_password_length
     special = true
 }
 
