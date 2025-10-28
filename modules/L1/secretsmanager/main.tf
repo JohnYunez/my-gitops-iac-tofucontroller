@@ -1,9 +1,7 @@
-data "aws_caller_identity" "current" {}
-
 resource "aws_secretsmanager_secret" "this" {
     name        = "${var.app_code}-${var.project_name}-${var.environment}-secret"
     description = var.secret_description
-    #kms_key_id  = var.secret_kms_key_arn
+    kms_key_id  = var.secret_kms_key_arn
     recovery_window_in_days = 7
 }
 

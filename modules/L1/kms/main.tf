@@ -10,21 +10,26 @@ resource "aws_kms_key" "l1_kms_key" {
   multi_region             = var.kms_multi_region
 }
 
-resource "aws_kms_key_policy" "l1_kms_policy" {
-  key_id = aws_kms_key.l1_kms_key.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Id      = "aws_kms_key_policy-1"
-    Statement = [
-      {
-        Sid    = "Enable Secrets Manager Permissions"
-        Effect = "Allow"
-        Principal = {
-          AWS = "${var.kms_secretsmanager_arn}"
-        },
-        Action   = "kms:*"
-        Resource = "*"
-      }
-    ]
-  })
+resource "aws_kms_alias" "l1_kms_alias" {
+  name          = "alias/${var.kms_alias_name}"
+  target_key_id = aws_kms_key.l1_kms_key.key_id
 }
+
+#resource "aws_kms_key_policy" "l1_kms_policy" {
+#  key_id = aws_kms_key.l1_kms_key.id
+#  policy = jsonencode({
+#    Version = "2012-10-17"
+#    Id      = "aws_kms_key_policy-1"
+#    Statement = [
+#      {
+#        Sid    = "Enable Secrets Manager Permissions"
+#        Effect = "Allow"
+#        Principal = {
+#          AWS = "${var.kms_secretsmanager_arn}"
+#        },
+#        Action   = "kms:*"
+#        Resource = "*"
+#      }
+#    ]
+#  })
+#}

@@ -1,8 +1,14 @@
+variable "kms_alias_name" {
+  type = string
+  description = "kms alias name"
+  default = "module-kms-alias-default"
+}
 variable "kms_description" {
   type = string
   description = "kms description"
-  default = "module-kms-default"
+  default = "module-kms-description-default"
 }
+
 variable "kms_key_usage" {
   type        = string
   description = "ENCRYPT_DECRYPT, SIGN_VERIFY, or GENERATE_VERIFY_MAC."
@@ -59,11 +65,11 @@ variable "kms_multi_region" {
   default = false
 }
 
-variable "kms_secretsmanager_arn" {
-  type = string
-  description = "ARN of the secretmanager that use the KMS key"
-  validation {
-    condition  = length(var.kms_secretsmanager_arn) > 4 && substr(var.kms_secretsmanager_arn, 0, 4) == "arn:"
-    error_message = "The arn is invalid (must start with arn)"
-  }
-}
+#variable "kms_secretsmanager_arn" {
+#  type = string
+#  description = "ARN of the secretmanager that use the KMS key"
+#  validation {
+#    condition  = length(var.kms_secretsmanager_arn) > 4 && substr(var.kms_secretsmanager_arn, 0, 4) == "arn:"
+#    error_message = "The arn is invalid (must start with arn)"
+#  }
+#}

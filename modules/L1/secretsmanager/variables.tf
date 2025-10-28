@@ -1,13 +1,3 @@
-variable "aws_region" {
-    description = "AWS region"
-    type        = string
-    default     = "us-east-1"
-    validation {
-        condition     = var.aws_region == "us-east-1" || var.aws_region == "us-east-2"
-        error_message = "The aws_region must be a valid AWS region, e.g., us-east-1."
-    }
-}
-
 variable "environment" {
     description = "Environment (e.g., dev, qa, pdn)"
     type        = string
@@ -44,15 +34,15 @@ variable "secret_description" {
     }
 }
 
-# variable "secret_kms_key_arn" {
-#     description = "KMS Key ID for secret encryption"
-#     type        = string
-#     default     = null
-#     validation {
-#         condition     = can(regex("^arn:aws:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9-]+$", var.secret_kms_key_arn))
-#         error_message = "secret_kms_key_arn must be a valid KMS Key ARN."
-#     }
-# }
+ variable "secret_kms_key_arn" {
+     description = "KMS Key ID for secret encryption"
+     type        = string
+     default     = null
+     validation {
+         condition     = can(regex("^arn:aws:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9-]+$", var.secret_kms_key_arn))
+         error_message = "secret_kms_key_arn must be a valid KMS Key ARN."
+     }
+ }
 
 variable "allowed_role_arn" {
     description = "IAM Role ARN allowed to access the secret"
