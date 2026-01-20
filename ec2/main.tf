@@ -8,6 +8,7 @@ resource "aws_instance" "instance" {
     tags = {
         Name = "my-gitops-instance"
         Source = "git:my-gitops-iac-tofucontroller"
+        appcode = "nu0000000"
     }
 }
 
