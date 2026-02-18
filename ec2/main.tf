@@ -8,8 +8,8 @@ resource "aws_instance" "instance" {
     tags = {
         Name = "my-gitops-instance"
         Source = "git:my-gitops-iac-tofucontroller"
-        appcode = "nu0445004"
-        appname = "tofucontroller"
+        "bancolombia:application-code" = "nu0445004"
+        "bancolombia:project-name" = "kaizen-tofucontroller"
         env = "sbx"
     }
 }
