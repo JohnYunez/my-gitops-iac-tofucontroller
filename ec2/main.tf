@@ -7,10 +7,10 @@ resource "aws_instance" "instance" {
     instance_type = "t2.micro"
     tags = {
         Name = "my-gitops-instance"
-        Source = "git:my-gitops-iac-tofucontroller"
+        "gitops:source" = "git:my-gitops-iac-tofucontroller"
         "bancolombia:application-code" = "nu0445004"
         "bancolombia:project-name" = "kaizen-tofucontroller"
-        env = "sbx"
+        "bancolombia:env" = "sbx"
     }
 }
 
